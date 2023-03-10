@@ -1,0 +1,32 @@
+<form onsubmit="getPageSpeedData(event)">
+    <label for="url-input">Website URL:</label>
+    <input type="text" id="url-input" name="url" placeholder="Enter website URL...">
+    <button type="submit">Estimate CO2 emission</button>
+  </form>
+  
+  <!-- Add a popup with the text "Loading, please wait..." -->
+  <div id="loading-popup" style="display: none">
+    <div>Loading, please wait...</div>
+  </div>
+  
+  <script>
+    const apiKey = "YOUR_API_KEY";
+  
+    async function getPageSpeedData(event) {
+      event.preventDefault();
+      const url = document.getElementById("url-input").value;
+      const apiUrl = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${url}&key=${apiKey}`;
+  
+      // Show the loading popup
+      document.getElementById("loading-popup").style.display = "flex";
+  
+      const response = await fetch(apiUrl);
+      const data = await response.json();
+  
+      const transferSize = data.lighthouseResult.audits["network-requests"].details.items.reduce((acc, item) => acc + item.transferSize, 0);
+  
+      // Pass the transferSize data to the result.html page
+      window.location.href = `result.html?transferSize=${transferSize}`;
+    }
+  </script>
+  

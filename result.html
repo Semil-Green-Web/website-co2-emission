@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>PageSpeed Results</title>
+</head>
+<body>
+  <h1>CO2 emission estimation result</h1>
+  <!--<p>Transfered over network: <span id="transfer-size"></span></p>-->
+  <p>CO2 produced: <span id="co2-value"></span> kg</p>
+
+  <script>
+    // Get the transferSize parameter from the URL query string
+  const params = new URLSearchParams(window.location.search);
+  const transferSize = params.get("transferSize");
+
+  // Calculate the CO2 value
+  const transferSizeInGB = transferSize / (1024 * 1024 * 1024); // Convert transfer size to GB
+  const co2Value = transferSizeInGB * 270; // Multiply transfer size in GB by 268.515
+
+  // Display the transferSize and CO2 data on the page
+  //document.getElementById("transfer-size").textContent = transferSize;
+  document.getElementById("co2-value").textContent = co2Value.toFixed(2); // Round CO2 value to 2 decimal places
+  </script>
+</body>
+</html>
